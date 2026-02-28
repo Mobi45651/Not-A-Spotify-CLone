@@ -34,7 +34,7 @@ async function getsongs(folder) {
 
 const playMusic = (track, pause = false) => {
     
-    currentSong.src = `./songs/${currFolder}/${track}`;
+    currentSong.src = `./Not-A-Spotify-CLone/songs/${currFolder}/${track}`;
     if (!pause) {
         currentSong.play()
 
@@ -49,38 +49,37 @@ const playMusic = (track, pause = false) => {
 
 async function displayAlbums() {
     try {
-    let res = await fetch("./Not-A-Spotify-CLONE/songs/index.json");
-    console.log(res);
-    let data = await res.json(); 
-    console.log("Fetched JSON:", data);
-
-    let cardcontainer = document.querySelector(".cardcontainer");
-    cardcontainer.innerHTML = "";
-    for (const album of data.albums) {
-        let infoRes = await fetch(`./Not-A-Spotify-CLONE/songs/${album.folder}/info.json`);
-        if (!infoRes.ok) throw new Error(`Failed to fetch ${album.folder}/info.json`);
-        let info = await infoRes.json();
-
-        cardcontainer.innerHTML += `<div data-folder="${album.folder}" class="card">
-                    <img src="./Not-A-Spotify-CLONE/songs/${album.folder}/cover.jpeg" class="cardimg">
-                    <h2>${album.Title}</h2>
-                    <p>${album.Detail}</p>
-                </div>`;
-    }
-
-} catch (err) {
-    console.error("Error fetching albums or parsing JSON:", err);
-
-    if (err instanceof SyntaxError) {
+        let res;
         try {
-            let res = await fetch("./Not-A-Spotify-CLONE/songs/index.json");
+            res = await fetch("./Not-A-Spotify-CLone/songs/index.json");
+            console.log(res);
+            let data = await res.json(); 
+            console.log("Fetched JSON:", data);
+
+            let cardcontainer = document.querySelector(".cardcontainer");
+            cardcontainer.innerHTML = "";
+            for (const album of data.albums) {
+                let infoRes = await fetch(`./Not-A-Spotify-CLone/songs/${album.folder}/info.json`);
+                if (!infoRes.ok) throw new Error(`Failed to fetch ${album.folder}/info.json`);
+                let info = await infoRes.json();
+
+                cardcontainer.innerHTML += `<div data-folder="${album.folder}" class="card">
+                            <img src="./Not-A-Spotify-CLone/songs/${album.folder}/cover.jpeg" class="cardimg">
+                            <h2>${album.Title}</h2>
+                            <p>${album.Detail}</p>
+                        </div>`;
+            }
+
+        } catch (err) {
+            console.error("Error parsing JSON, printing raw response:", err);
             let text = await res.text();
             console.log("Raw response from server:", text);
-        } catch(e) {
-            console.error("Cannot fetch raw response:", e);
         }
+
+    } catch (err) {
+        console.error("Failed to display albums:", err);
     }
-}
+} 
 
 async function main() {
     await getsongs("Cool");
