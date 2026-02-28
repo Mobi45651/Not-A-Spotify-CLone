@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
+    <title>Not a Spotify Clone</title>
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="main">
+        <div class="header"><img src="logo.svg" class="logo">
+            <img src="hamburger.svg" class="ham inverted" id="ham">
+            <div class="circle">
+                <img src="home.svg" alt="" class="inverted home" width="25px ">
+            </div>
+            <div class="search"><img src="search.svg" class="inverted searbtn">
+                <p>Search For A Song</p>
+            </div>
+        </div>
+        <div class="flex">
+            <div class="box" id="left">
+                <h1>Your Library</h1>
+                <div class="songlist">
+                    <ul>
+
+                    </ul>
+                </div>
+            </div>
+            <div class="box" id="right">
+                <h3>Your Songs</h3>
+                <div class="cardcontainer">
+                    
+                    
+                   
+                </div>
+
+                <div class="playbar">
+                    <div class="seekbar">
+                        <div class="seekcircle"></div>
+                    </div>
+                    <div class="above">
+                        <div class="songdetail">
+
+                        </div>
+                        <div class="songbutton">
+                            <img id="previous" src="prev.svg" alt="">
+                            <img id="play" src="play.svg" alt="">
+                            <img id="next" src="next.svg" alt="">
+                        </div>
+                        <div class="voldur">
+                            <div class="songtime">
+                            </div>
+                            <div class="vol"><img src="volup.svg" class="">
+                                <div class="range"><input type="range" name="" id="volrange"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
