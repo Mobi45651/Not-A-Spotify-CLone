@@ -49,37 +49,42 @@ const playMusic = (track, pause = false) => {
 
 async function displayAlbums() {
     try {
-        let res;
-        try {
-            res = await fetch("./Not-A-Spotify-CLone/songs/index.json");
-            console.log(res);
-            let data = await res.json(); 
-            console.log("Fetched JSON:", data);
+        let res = await fetch("./Not-A-Spotify-CLone/songs/index.json");
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+        let data = await res.json();
 
-            let cardcontainer = document.querySelector(".cardcontainer");
-            cardcontainer.innerHTML = "";
-            for (const album of data.albums) {
-                let infoRes = await fetch(`./Not-A-Spotify-CLone/songs/${album.folder}/info.json`);
-                if (!infoRes.ok) throw new Error(`Failed to fetch ${album.folder}/info.json`);
-                let info = await infoRes.json();
+        let cardcontainer = document.querySelector(".cardcontainer");
+        cardcontainer.innerHTML = ""; 
 
-                cardcontainer.innerHTML += `<div data-folder="${album.folder}" class="card">
-                            <img src="./Not-A-Spotify-CLone/songs/${album.folder}/cover.jpeg" class="cardimg">
-                            <h2>${album.Title}</h2>
-                            <p>${album.Detail}</p>
-                        </div>`;
-            }
+        for (const album of data.albums) {
+            let infoRes = await fetch(`songs/${album.folder}/info.json`);
+            if (!infoRes.ok) throw new Error(`Failed to fetch ${album.folder}/info.json`);
+            let info = await infoRes.json();
 
-        } catch (err) {
-            console.error("Error parsing JSON, printing raw response:", err);
-            let text = await res.text();
-            console.log("Raw response from server:", text);
+            cardcontainer.innerHTML += `<div data-folder="${album.folder}" class="card">
+                        <img src="./Not-A-Spotify-CLonesongs/${album.folder}/cover.jpeg" class="cardimg">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40">
+                            <circle cx="12" cy="12" r="10" fill="#1DB954" />
+                            <path
+                                d="M15.9453 12.3948C15.7686 13.0215 14.9333 13.4644 13.2629 14.3502C11.648 15.2064 10.8406 15.6346 10.1899 15.4625C9.9209 15.3913 9.6758 15.2562 9.47812 15.0701C9 14.6198 9 13.7465 9 12C9 10.2535 9 9.38018 9.47812 8.92995C9.6758 8.74381 9.9209 8.60868 10.1899 8.53753C10.8406 8.36544 11.648 8.79357 13.2629 9.64983C14.9333 10.5356 15.7686 10.9785 15.9453 11.6052C16.0182 11.8639 16.0182 12.1361 15.9453 12.3948Z"
+                                fill="black" />
+                        </svg>
+                        <h2>${album.Title}</h2>
+                        <p>${album.Detail}</p>
+                    </div>`;
         }
+
+        // Add click event to cards
+        Array.from(document.getElementsByClassName("card")).forEach(e => {
+            e.addEventListener("click", async item => {
+                await getsongs(item.currentTarget.dataset.folder);
+            });
+        });
 
     } catch (err) {
         console.error("Failed to display albums:", err);
     }
-} 
+}
 
 async function main() {
     await getsongs("Cool");
