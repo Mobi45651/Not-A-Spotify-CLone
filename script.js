@@ -49,7 +49,7 @@ const playMusic = (track, pause = false) => {
 
 async function displayAlbums() {
     try {
-        let res = await fetch("./Not-A-Spotify-CLone/songs/index.json");
+        let res = await fetch("./songs/index.json");
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         let data = await res.json();
 
