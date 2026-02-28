@@ -4,7 +4,7 @@ let currentSong = new Audio();
 let currFolder;
 async function getsongs(folder) {
     currFolder = folder;
-    let a = await fetch(`./Not-A-Spotify-CLone/songs/${currFolder}/info.json`);
+    let a = await fetch(`./songs/${currFolder}/info.json`);
     let response = await a.json();
 
     let div = document.createElement("div")
@@ -34,7 +34,7 @@ async function getsongs(folder) {
 
 const playMusic = (track, pause = false) => {
 
-    currentSong.src = `./Not-A-Spotify-CLone/songs/${currFolder}/${track}`;
+    currentSong.src = `./songs/${currFolder}/${track}`;
     if (!pause) {
         currentSong.play()
 
@@ -57,12 +57,12 @@ async function displayAlbums() {
         cardcontainer.innerHTML = "";
 
         for (const album of data.albums) {
-            let infoRes = await fetch(`./Not-A-Spotify-CLone/songs/${album.folder}/info.json`);
+            let infoRes = await fetch(`./songs/${album.folder}/info.json`);
             if (!infoRes.ok) throw new Error(`Failed to fetch ${album.folder}/info.json`);
             let info = await infoRes.json();
 
             cardcontainer.innerHTML += `<div data-folder="${album.folder}" class="card">
-                        <img src="./Not-A-Spotify-CLone/songs/${album.folder}/cover.jpeg" class="cardimg">
+                        <img src="./songs/${album.folder}/cover.jpeg" class="cardimg">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40">
                             <circle cx="12" cy="12" r="10" fill="#1DB954" />
                             <path
@@ -74,7 +74,6 @@ async function displayAlbums() {
                     </div>`;
         }
 
-        // Add click event to cards
         Array.from(document.getElementsByClassName("card")).forEach(e => {
             e.addEventListener("click", async item => {
                 await getsongs(item.currentTarget.dataset.folder);
