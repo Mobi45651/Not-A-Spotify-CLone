@@ -33,7 +33,7 @@ async function getsongs(folder) {
 
 
 const playMusic = (track, pause = false) => {
-    
+
     currentSong.src = `./Not-A-Spotify-CLone/songs/${currFolder}/${track}`;
     if (!pause) {
         currentSong.play()
@@ -54,15 +54,15 @@ async function displayAlbums() {
         let data = await res.json();
 
         let cardcontainer = document.querySelector(".cardcontainer");
-        cardcontainer.innerHTML = ""; 
+        cardcontainer.innerHTML = "";
 
         for (const album of data.albums) {
-            let infoRes = await fetch(`songs/${album.folder}/info.json`);
+            let infoRes = await fetch(`./Not-A-Spotify-CLone/songs/${album.folder}/info.json`);
             if (!infoRes.ok) throw new Error(`Failed to fetch ${album.folder}/info.json`);
             let info = await infoRes.json();
 
             cardcontainer.innerHTML += `<div data-folder="${album.folder}" class="card">
-                        <img src="./Not-A-Spotify-CLonesongs/${album.folder}/cover.jpeg" class="cardimg">
+                        <img src="./Not-A-Spotify-CLone/songs/${album.folder}/cover.jpeg" class="cardimg">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40">
                             <circle cx="12" cy="12" r="10" fill="#1DB954" />
                             <path
@@ -129,7 +129,7 @@ async function main() {
     })
     currentSong.addEventListener("ended", () => {
         let index = songs.indexOf(decodeURIComponent(currentSong.src.split('/').slice(-1)[0]));
-        console.log("Index Length"+index+songs.length)
+        console.log("Index Length" + index + songs.length)
         if (index + 1 >= songs.length) {
             playMusic(songs[0])
         }
@@ -177,7 +177,7 @@ async function main() {
     })
 
 
-    
+
 }
 
 function formatTime(seconds) {
