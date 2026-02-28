@@ -4,7 +4,7 @@ let currentSong = new Audio();
 let currFolder;
 async function getsongs(folder) {
     currFolder = folder;
-    let a = await fetch(`/songs/${currFolder}/info.json`);
+    let a = await fetch(`songs/${currFolder}/info.json`);
     let response = await a.json();
 
     let div = document.createElement("div")
@@ -34,7 +34,7 @@ async function getsongs(folder) {
 
 const playMusic = (track, pause = false) => {
     
-    currentSong.src = `/songs/${currFolder}/${track}`;
+    currentSong.src = `songs/${currFolder}/${track}`;
     if (!pause) {
         currentSong.play()
 
@@ -48,7 +48,7 @@ const playMusic = (track, pause = false) => {
 }
 
 async function displayAlbums() {
-    let a = await fetch(`/songs/`);
+    let a = await fetch(`songs/`);
     let response = await a.text();
 
     let div = document.createElement("div")
@@ -58,7 +58,7 @@ async function displayAlbums() {
     let array = Array.from(anchors);
     for (let index = 0; index < array.length; index++) {
         const e = array[index];
-        if (e.href.includes("/songs/")) {
+        if (e.href.includes("songs/")) {
             let folder = e.href.split("/").slice(-2)[0]
             console.log(folder)
             let a = await fetch(`/songs/${folder}/info.json`);
@@ -66,7 +66,7 @@ async function displayAlbums() {
             console.log(response)
             let cardcontainer = document.querySelector(".cardcontainer")
             cardcontainer.innerHTML = cardcontainer.innerHTML + `<div data-folder="${folder}" class="card">
-                        <img src="/songs/${folder}/cover.jpeg" class="cardimg">
+                        <img src="songs/${folder}/cover.jpeg" class="cardimg">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40">
                             <circle cx="12" cy="12" r="10" fill="#1DB954" />
                             <path
