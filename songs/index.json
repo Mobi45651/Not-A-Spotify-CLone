@@ -1,0 +1,6 @@
+{
+  "albums": [
+    { "folder": "Cool", "Title": "Cool Songs", "Detail": "NoThing in Mind" },
+    { "folder": "Good", "Title": "Smooth Songs", "Detail": "Same as Before" }
+  ]
+}
